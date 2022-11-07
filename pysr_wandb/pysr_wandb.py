@@ -1,6 +1,7 @@
 """Main module."""
 import wandb
 from pysr import PySRRegressor
+import sympy
 from .problems import *
 
 PROCS = 8
@@ -16,6 +17,10 @@ UNCHANGED_PARAMS = dict(
         "square",
         "cube",
     ],
+    extra_sympy_mappings={
+        "safe_sin": sympy.sin,
+        "safe_cos": sympy.cos,
+    }
     max_evals=None,
     maxdepth=None,
     maxsize=30,
