@@ -3,6 +3,8 @@ import wandb
 from pysr import PySRRegressor
 from .problems import *
 
+PROCS = 8
+
 UNCHANGED_PARAMS = dict(
     niterations=10000000,
     model_selection="best",
@@ -27,7 +29,6 @@ UNCHANGED_PARAMS = dict(
     should_optimize_constants=True,
     multithreading=True,
     update=False,
-    procs="REQUIRED",  # User needs to override this.
     progress=False,
     verbosity=0,
     warm_start=False,
@@ -87,7 +88,8 @@ def run(wandb, problem, seed):
     X, y = problem(seed)
     model = PySRRegressor(**UNCHANGED_PARAMS)
     model.set_params(**wandb.config)
-    model.set_params(seed=seed)
+    model.set_params(random_state=seed)
+    model.set_params(procs=PROCS)
     model.fit(X, y)
     best_loss = model.best().iloc[-1].loss
     best_complexity = model.best().iloc[-1].complexity
