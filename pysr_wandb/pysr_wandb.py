@@ -93,7 +93,7 @@ def run(wandb, problem, seed):
     model.fit(X, y)
     best_loss = model.get_best().loss
     best_complexity = model.get_best().complexity
-    combined = best_loss**0.2 + best_complexity * 0.01
+    combined = best_loss**0.1
 
     problem_name = problem.__name__
     wandb.log(
