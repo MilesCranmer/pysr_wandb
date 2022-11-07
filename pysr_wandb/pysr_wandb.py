@@ -9,7 +9,13 @@ UNCHANGED_PARAMS = dict(
     niterations=10000000,
     model_selection="best",
     binary_operators=["+", "-", "*", "/"],
-    unary_operators=["sin", "cos", "exp", "square", "cube"],
+    unary_operators=[
+        "safe_sin(x::T) where T = isfinite(x) ? sin(x) : T(NaN)",
+        "safe_cos(x::T) where T = isfinite(x) ? cos(x) : T(NaN)",
+        "exp",
+        "square",
+        "cube",
+    ],
     max_evals=None,
     maxdepth=None,
     maxsize=30,
@@ -32,7 +38,7 @@ UNCHANGED_PARAMS = dict(
     progress=False,
     verbosity=0,
     warm_start=False,
-    turbo=True,
+    turbo=False,
     precision=32,
     fast_cycle=False,
     random_state=None,
@@ -116,7 +122,9 @@ def run(wandb, problem, seed):
         },
         step=seed,
     )
-    wandb_table = wandb.Table(dataframe=model.equations_[["equation", "score", "loss", "complexity"]])
+    wandb_table = wandb.Table(
+        dataframe=model.equations_[["equation", "score", "loss", "complexity"]]
+    )
     wandb.log(
         {"equations_{problem_name}": wandb_table},
     )
