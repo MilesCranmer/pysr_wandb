@@ -13,6 +13,8 @@ with open("HISTORY.rst") as history_file:
 requirements = [
     "pysr==0.11.9",
     "wandb>=0.13.0",
+    "numpy",
+    "pandas",
 ]
 
 test_requirements = []
