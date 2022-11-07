@@ -77,6 +77,7 @@ DEFAULT_CONFIG = dict(
 def init_wandb():
     wandb.init(
         project="pysr_wandb",
+        entity="mcranmer",
         config=DEFAULT_CONFIG,
     )
     return wandb
@@ -123,6 +124,10 @@ def runall(wandb):
     )
 
 
-if __name__ == "__main__":
+def main():
     wandb = init_wandb()
     runall(wandb)
+
+
+if __name__ == "__main__":
+    main()
