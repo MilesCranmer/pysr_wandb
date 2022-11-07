@@ -104,6 +104,10 @@ def run(wandb, problem, seed):
         },
         step=seed,
     )
+    wandb_table = wandb.Table(dataframe=model.equations_)
+    wandb.log(
+        {"equations_{problem_name}": wandb_table},
+    )
     return combined
 
 
