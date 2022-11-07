@@ -2,8 +2,9 @@
 import wandb
 from pysr import PySRRegressor
 from .problems import *
+from copy import deepcopy
 
-PROCS = 4
+PROCS = 8
 
 UNCHANGED_PARAMS = dict(
     niterations=10000000,
@@ -39,7 +40,7 @@ UNCHANGED_PARAMS = dict(
     deterministic=False,
 )
 
-timeout_minutes = 0.5
+timeout_minutes = 1.0
 
 DEFAULT_CONFIG = dict(
     timeout_in_seconds=timeout_minutes * 60,
@@ -87,8 +88,18 @@ def init_wandb():
 def run(wandb, problem, seed):
     X, y = problem(seed)
     model = PySRRegressor(**UNCHANGED_PARAMS)
+    config = deepcopy(wandb.config)
+    config["annealing"] = bool(config["annealing"])
+    config["batching"] = bool(config["batching"])
+    config["tournament_selection_n"] = int(config["tournament_selection_n"])
+    config["optimizer_nrestarts"] = int(config["optimizer_nrestarts"])
+    config["optimizer_iterations"] = int(config["optimizer_iterations"])
+    config["topn"] = int(config["topn"])
+    config["batch_size"] = int(config["batch_size"])
+    config["ncyclesperiteration"] = int(config["ncyclesperiteration"])
+    config["population_size"] = int(config["population_size"])
+    config["populations"] = int(config["populations"])
     model.set_params(**wandb.config)
-    model.set_params(random_state=seed)
     model.set_params(procs=PROCS)
     model.fit(X, y)
     best_loss = model.get_best().loss
@@ -104,7 +115,7 @@ def run(wandb, problem, seed):
         },
         step=seed,
     )
-    wandb_table = wandb.Table(dataframe=model.equations_)
+    wandb_table = wandb.Table(dataframe=model.equations_[["equation", "score", "loss", "complexity"]])
     wandb.log(
         {"equations_{problem_name}": wandb_table},
     )

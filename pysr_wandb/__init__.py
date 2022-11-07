@@ -3,3 +3,5 @@
 __author__ = """Miles Cranmer"""
 __email__ = 'miles.cranmer@gmail.com'
 __version__ = '0.1.0'
+
+from .pysr_wandb import main

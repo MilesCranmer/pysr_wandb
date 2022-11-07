@@ -64,10 +64,6 @@ parameters:
     max: 3.4
     min: 0.85
     distribution: uniform
-  timeout_in_seconds:
-    max: 360
-    min: 15
-    distribution: int_uniform
   weight_do_nothing:
     max: 0.42
     min: 0.105
