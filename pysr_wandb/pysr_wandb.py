@@ -121,3 +121,8 @@ def runall(wandb):
             "overall": np.median(all_results),
         }
     )
+
+
+if __name__ == "__main__":
+    wandb = init_wandb()
+    runall(wandb)
