@@ -109,3 +109,4 @@ ENV/
 wandb
 *.csv*
 *.pkl
+.DS_Store
