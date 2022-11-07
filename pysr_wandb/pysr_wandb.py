@@ -3,7 +3,7 @@ import wandb
 from pysr import PySRRegressor
 from .problems import *
 
-PROCS = 8
+PROCS = 4
 
 UNCHANGED_PARAMS = dict(
     niterations=10000000,
@@ -39,7 +39,7 @@ UNCHANGED_PARAMS = dict(
     deterministic=False,
 )
 
-timeout_minutes = 3
+timeout_minutes = 0.5
 
 DEFAULT_CONFIG = dict(
     timeout_in_seconds=timeout_minutes * 60,
@@ -91,17 +91,18 @@ def run(wandb, problem, seed):
     model.set_params(random_state=seed)
     model.set_params(procs=PROCS)
     model.fit(X, y)
-    best_loss = model.best().iloc[-1].loss
-    best_complexity = model.best().iloc[-1].complexity
+    best_loss = model.get_best().loss
+    best_complexity = model.get_best().complexity
     combined = best_loss**0.2 + best_complexity * 0.01
 
     problem_name = problem.__name__
     wandb.log(
         {
-            f"loss_{problem_name}_{seed}": best_loss,
-            f"complexity_{problem_name}_{seed}": best_complexity,
-            f"combined_{problem_name}_{seed}": combined,
-        }
+            f"loss_{problem_name}": best_loss,
+            f"complexity_{problem_name}": best_complexity,
+            f"combined_{problem_name}": combined,
+        },
+        step=seed,
     )
     return combined
 
