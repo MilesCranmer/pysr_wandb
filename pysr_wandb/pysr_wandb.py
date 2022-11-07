@@ -2,7 +2,6 @@
 import wandb
 from pysr import PySRRegressor
 from .problems import *
-from copy import deepcopy
 
 PROCS = 8
 
@@ -88,7 +87,9 @@ def init_wandb():
 def run(wandb, problem, seed):
     X, y = problem(seed)
     model = PySRRegressor(**UNCHANGED_PARAMS)
-    config = deepcopy(wandb.config)
+    config = {}
+    for k, v in wandb.config.items():
+        config[k] = v
     config["annealing"] = bool(config["annealing"])
     config["batching"] = bool(config["batching"])
     config["tournament_selection_n"] = int(config["tournament_selection_n"])
@@ -99,7 +100,7 @@ def run(wandb, problem, seed):
     config["ncyclesperiteration"] = int(config["ncyclesperiteration"])
     config["population_size"] = int(config["population_size"])
     config["populations"] = int(config["populations"])
-    model.set_params(**wandb.config)
+    model.set_params(**config)
     model.set_params(procs=PROCS)
     model.fit(X, y)
     best_loss = model.get_best().loss
