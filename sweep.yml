@@ -1,0 +1,124 @@
+program: train.py
+method: bayes
+metric:
+  goal: minimize
+  name: overall
+parameters:
+  adaptive_parsimony_scaling:
+    max: 6.0
+    min: -1.0
+    distribution: log_uniform
+  weight_mutate_operator:
+    max: 0.94
+    min: 0.235
+    distribution: uniform
+  weight_mutate_constant:
+    max: 0.096
+    min: 0.024
+    distribution: uniform
+  weight_optimize:
+    max: -2
+    min: -5
+    distribution: log_uniform
+  tournament_selection_p:
+    max: 1.72
+    min: 0.43
+    distribution: uniform
+  tournament_selection_n:
+    max: 20
+    min: 2
+    distribution: int_uniform
+  fraction_replaced_hof:
+    max: 0.07
+    min: 0.0175
+    distribution: uniform
+  crossover_probability:
+    max: 0.132
+    min: 0.033
+    distribution: uniform
+  optimizer_iterations:
+    max: 16
+    min: 4
+    distribution: int_uniform
+  optimize_probability:
+    max: 1.0
+    min: 0.0
+    distribution: uniform
+  perturbation_factor:
+    max: 0.152
+    min: 0.038
+    distribution: uniform
+  optimizer_nrestarts:
+    max: 4
+    min: 1
+    distribution: int_uniform
+  ncyclesperiteration:
+    max: 1100
+    min: 275
+    distribution: int_uniform
+  weight_insert_node:
+    max: 10.2
+    min: 2.55
+    distribution: uniform
+  weight_delete_node:
+    max: 3.4
+    min: 0.85
+    distribution: uniform
+  timeout_in_seconds:
+    max: 360
+    min: 15
+    distribution: int_uniform
+  weight_do_nothing:
+    max: 0.42
+    min: 0.105
+    distribution: uniform
+  fraction_replaced:
+    max: 0.000728
+    min: 0.000182
+    distribution: uniform
+  weight_randomize:
+    max: 0.00046
+    min: 0.000115
+    distribution: uniform
+  weight_simplify:
+    max: 0.004
+    min: 0.001
+    distribution: uniform
+  weight_add_node:
+    max: 1.58
+    min: 0.395
+    distribution: uniform
+  population_size:
+    max: 200
+    min: 25
+    distribution: int_uniform
+  populations:
+    max: 60
+    min: 8
+    distribution: int_uniform
+  batch_size:
+    max: 15
+    min: 5
+    distribution: int_uniform
+  parsimony:
+    max: -2
+    min: -3
+    distribution: log_uniform
+  annealing:
+    values:
+      - "true"
+      - "false"
+    distribution: categorical
+  batching:
+    values:
+      - "true"
+      - "false"
+    distribution: categorical
+  alpha:
+    max: 0
+    min: -2
+    distribution: log_uniform
+  topn:
+    max: 20
+    min: 6
+    distribution: int_uniform
