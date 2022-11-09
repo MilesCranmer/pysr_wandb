@@ -20,7 +20,7 @@ UNCHANGED_PARAMS = dict(
     extra_sympy_mappings={
         "safe_sin": sympy.sin,
         "safe_cos": sympy.cos,
-    }
+    },
     max_evals=None,
     maxdepth=None,
     maxsize=30,
@@ -91,6 +91,7 @@ def init_wandb():
         project="pysr_wandb",
         entity="mcranmer",
         config=DEFAULT_CONFIG,
+        dir="/mnt/home/mcranmer/ceph/logs/pysr_wandb",
     )
     return wandb
 
