@@ -110,3 +110,7 @@ wandb
 *.csv*
 *.pkl
 .DS_Store
+
+# Logging:
+*disBatch*
+slurm*
